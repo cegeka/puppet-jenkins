@@ -1,6 +1,6 @@
-# Class: puppet-jenkins
+# Class: jenkins
 #
-# This module manages puppet-jenkins
+# This module manages jenkins
 #
 # Parameters:
 #
@@ -10,7 +10,7 @@
 #
 # Sample Usage:
 #
-class puppet-jenkins {
+class jenkins {
 
 
 }
