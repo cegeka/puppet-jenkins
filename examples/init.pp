@@ -1,1 +1,1 @@
-include puppet-jenkins
+include jenkins
