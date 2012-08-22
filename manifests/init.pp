@@ -27,7 +27,7 @@ class jenkins($jenkins_version=undef, $jenkins_plugins=undef, $ensure='present')
   }
 
   case $::operatingsystem {
-      redhat, centos: { include jenkins-sunappserver::redhat }
+      redhat, centos: { include jenkins::redhat }
       default: { fail("operatingsystem ${::operatingsystem} is not supported") }
   }
 }

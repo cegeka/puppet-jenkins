@@ -1,22 +1,15 @@
-define jenkins::plugin($version=undef) {
-  $plugin            = "${name}.hpi"
-  $plugin_dir        = '/data/jenkins/plugins'
+define jenkins::plugin($version=undef,$plugin_dir=undef) {
+  $plugin = "${name}.hpi"
+
+  if ! $plugin_dir {
+    $plugin_dir = '/data/jenkins/plugins'
+  }
 
   if ($version) {
     $base_url = "http://updates.jenkins-ci.org/download/plugins/${name}/${version}/"
   }
   else {
     $base_url   = 'http://updates.jenkins-ci.org/latest/'
-  }
-
-  if (!defined(File[$plugin_dir])) {
-    file {
-      [$plugin_parent_dir, $plugin_dir]:
-        ensure  => directory,
-        owner   => 'jenkins',
-        group   => 'jenkins',
-        require => [Group['jenkins'], User['jenkins']];
-    }
   }
 
   exec {
@@ -27,6 +20,6 @@ define jenkins::plugin($version=undef) {
       path     => ['/usr/bin', '/usr/sbin',],
       user     => 'jenkins',
       unless   => "test -f ${plugin_dir}/${plugin}",
-      notify   => Service['jenkins'];
+      notify   => Service['jenkins'],
   }
 }
