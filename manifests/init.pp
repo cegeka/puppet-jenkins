@@ -30,6 +30,7 @@ class jenkins($jenkins_version=undef, $jenkins_plugins=undef, $ensure='present')
       redhat, centos: { include jenkins::redhat }
       default: { fail("operatingsystem ${::operatingsystem} is not supported") }
   }
-
-  jenkins::plugin { $jenkins_plugins:; }
+  if $jenkins_plugins {
+    jenkins::plugin { $jenkins_plugins:; }
+  }
 }
