@@ -1,8 +1,10 @@
 define jenkins::plugin($version=undef,$plugin_dir=undef) {
+  include jenkins::params
+
   $plugin = "${name}.hpi"
 
   if ! $plugin_dir {
-    $real_plugin_dir = '/data/jenkins/plugins'
+    $real_plugin_dir = $jenkins::params::jenkins_plugin_dir
   } else {
     $real_plugin_dir = $plugin_dir
   }
