@@ -2,7 +2,9 @@ define jenkins::plugin($version=undef,$plugin_dir=undef) {
   $plugin = "${name}.hpi"
 
   if ! $plugin_dir {
-    $plugin_dir = '/data/jenkins/plugins'
+    $real_plugin_dir = '/data/jenkins/plugins'
+  } else {
+    $real_plugin_dir = $plugin_dir
   }
 
   if ($version) {
@@ -15,11 +17,11 @@ define jenkins::plugin($version=undef,$plugin_dir=undef) {
   exec {
     "download-${name}" :
       command  => "wget --no-check-certificate ${base_url}${plugin}",
-      cwd      => $plugin_dir,
-      require  => File[$plugin_dir],
+      cwd      => $real_plugin_dir,
+      require  => File[$real_plugin_dir],
       path     => ['/usr/bin', '/usr/sbin',],
       user     => 'jenkins',
-      unless   => "test -f ${plugin_dir}/${plugin}",
+      unless   => "test -f ${real_plugin_dir}/${plugin}",
       notify   => Service['jenkins'],
   }
 }
