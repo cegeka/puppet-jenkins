@@ -2,6 +2,6 @@
 
 require 'spec_helper'
 
-describe 'puppet-jenkins' do
-  it { should contain_class 'puppet-jenkins' }
+describe 'jenkins' do
+  it { should contain_class 'jenkins' }
 end
