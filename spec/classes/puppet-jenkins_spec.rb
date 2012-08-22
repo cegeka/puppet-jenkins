@@ -3,5 +3,10 @@
 require 'spec_helper'
 
 describe 'jenkins' do
-  it { should contain_class 'jenkins' }
+  #$jenkins_version=undef, $jenkins_plugins=undef, $ensure='present'
+  let (:params) { { :jenkins_version=> 'latest' , :jenkins_plugins => ['a','b'] , :ensure => 'present' }}
+  context "Operating system release 5.8" do
+    it { should contain_class 'jenkins' }
+    let(:facts) { { :operatingsystem => 'CentOS' } }
+  end
 end
