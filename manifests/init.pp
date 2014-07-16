@@ -20,7 +20,7 @@ class jenkins($jenkins_version=undef, $jenkins_plugins=undef, $ensure='present')
     $real_jenkins_ensure = $ensure
   } else {
     if ! $jenkins_version {
-      $real_jenkins_ensure = 'latest'
+      $real_jenkins_ensure = 'present'
     } else {
       $real_jenkins_ensure = $jenkins_version
     }
