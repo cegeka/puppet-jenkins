@@ -1,4 +1,8 @@
-define jenkins::plugin($version=undef,$plugin_dir=undef) {
+define jenkins::plugin(
+  $version = undef,
+  $plugin_dir = undef
+) {
+
   include jenkins::params
 
   $plugin = "${name}.hpi"
@@ -26,4 +30,5 @@ define jenkins::plugin($version=undef,$plugin_dir=undef) {
       unless   => "test -f ${real_plugin_dir}/${plugin}",
       notify   => Service['jenkins'],
   }
+
 }
