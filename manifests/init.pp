@@ -10,7 +10,12 @@
 #
 # Sample Usage:
 #
-class jenkins($jenkins_version=undef, $jenkins_plugins=undef, $ensure='present') {
+class jenkins(
+  $jenkins_version = undef,
+  $jenkins_plugins = undef,
+  $ensure = 'present'
+) {
+
   if $ensure in [present, absent] {
   } else {
     fail('Jenkins: ensure parameter must be present or absent')
@@ -33,4 +38,5 @@ class jenkins($jenkins_version=undef, $jenkins_plugins=undef, $ensure='present')
   if $jenkins_plugins {
     jenkins::plugin { $jenkins_plugins:; }
   }
+
 }
