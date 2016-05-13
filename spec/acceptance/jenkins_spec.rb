@@ -3,8 +3,8 @@ require 'spec_helper_acceptance'
 describe 'jenkins' do
 
   describe 'running puppet code' do
+    let(:facts) { { :customerenv => 'dev' } }
     it 'should work with no errors' do
-      let(:facts) { { :customerenv => 'dev' } }
       pp = <<-EOS
         Yum::Repo <| title == 'cegeka-custom-noarch' |>
         include ::cegekarepos
