@@ -5,6 +5,8 @@ describe 'jenkins' do
   describe 'running puppet code' do
     it 'should work with no errors' do
       pp = <<-EOS
+        Yum::Repo <| title == 'cegeka-custom-noarch' |>
+        include ::cegekarepos
         include ::jenkins
       EOS
 
