@@ -3,7 +3,10 @@ require 'spec_helper_acceptance'
 describe 'jenkins' do
 
   describe 'running puppet code' do
-    let(:facts) { { :customerenv => 'dev' } }
+    let(:scope) { PuppetlabsSpec::PuppetInternals.scope }
+    let(:facts) do
+      { :customerenv => 'dev' }
+    end
     it 'should work with no errors' do
       pp = <<-EOS
         Yum::Repo <| title == 'cegeka-custom-noarch' |>
