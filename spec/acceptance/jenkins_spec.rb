@@ -4,10 +4,15 @@ describe 'jenkins' do
 
   describe 'running puppet code' do
     it 'should work with no errors' do
+      repo = <<-EOS
+        include cegekarepos::cegeka
+        Yum::Repo <| title == 'cegeka-custom-noarch' |>
+      EOS
       pp = <<-EOS
-        class { '::cegekarepos::cegeka': } -> Yum::Repo <| title == 'cegeka-custom-noarch' |> -> class { '::jenkins': }
+        include ::jenkins
       EOS
 
+      apply_manifest(repo)
       # Run it twice and test for idempotency
       apply_manifest(pp, :catch_failures => true)
       apply_manifest(pp, :catch_changes => true)
