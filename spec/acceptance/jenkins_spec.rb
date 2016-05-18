@@ -7,6 +7,7 @@ describe 'jenkins' do
       repo = <<-EOS
         include cegekarepos::cegeka
         Yum::Repo <| title == 'cegeka-custom-noarch' |>
+        package { 'java-1.8.0-openjdk': ensure => installed' }
       EOS
       pp = <<-EOS
         include ::jenkins
