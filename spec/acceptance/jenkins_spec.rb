@@ -19,9 +19,9 @@ describe 'jenkins' do
       apply_manifest(pp, :catch_changes => true)
     end
 
-    it { is_expected.to contain_package('jenkins') }
-    it { is_expected.to contain_service('jenkins') }
+    describe file '/data/jenkins' do
+      it { is_expected.to be_directory }
+    end
 
   end
 end
-
