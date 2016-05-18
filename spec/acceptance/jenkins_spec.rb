@@ -3,15 +3,13 @@ require 'spec_helper_acceptance'
 describe 'jenkins' do
 
   describe 'running puppet code' do
-    let(:scope) { PuppetlabsSpec::PuppetInternals.scope }
-    let(:facts) do
-      { :customerenv => 'dev' }
-    end
     it 'should work with no errors' do
       pp = <<-EOS
+        include ::cegekarepos::cegeka
         Yum::Repo <| title == 'cegeka-custom-noarch' |>
-        include ::cegekarepos
-        include ::jenkins
+        class { '::jenkins':
+          require => Yum::Repo['cegeka-custom-noarch']
+        }
       EOS
 
       # Run it twice and test for idempotency
