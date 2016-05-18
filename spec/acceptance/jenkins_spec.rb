@@ -6,7 +6,7 @@ describe 'jenkins' do
     it 'should work with no errors' do
       pp = <<-EOS
         include ::cegekarepos::cegeka
-        Yum::Repo <| title == 'cegeka-custom-noarch' |> -> include ::jenkins
+        Yum::Repo <| title == 'cegeka-custom-noarch' |> -> class { '::jenkins': }
       EOS
 
       # Run it twice and test for idempotency
