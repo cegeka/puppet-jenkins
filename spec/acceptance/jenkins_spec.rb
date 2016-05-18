@@ -5,7 +5,7 @@ describe 'jenkins' do
   describe 'running puppet code' do
     it 'should work with no errors' do
       pp = <<-EOS
-        include ::cegekarepos::cegeka -> Yum::Repo <| title == 'cegeka-custom-noarch' |> -> class { '::jenkins': }
+        class { '::cegekarepos::cegeka': } -> Yum::Repo <| title == 'cegeka-custom-noarch' |> -> class { '::jenkins': }
       EOS
 
       # Run it twice and test for idempotency
