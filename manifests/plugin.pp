@@ -20,15 +20,8 @@ define jenkins::plugin(
     $base_url   = 'http://updates.jenkins-ci.org/latest/'
   }
 
-  exec {
-    "download-${name}" :
-      command  => "wget --no-check-certificate ${base_url}${plugin}",
-      cwd      => $real_plugin_dir,
-      require  => File[$real_plugin_dir],
-      path     => ['/usr/bin', '/usr/sbin',],
-      user     => 'jenkins',
-      unless   => "test -f ${real_plugin_dir}/${plugin}",
-      notify   => Service['jenkins'],
+  jenkins_plugin { $name:
+    ensure => present,
   }
 
 }
