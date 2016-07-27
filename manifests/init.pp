@@ -13,7 +13,8 @@
 class jenkins(
   $jenkins_version = undef,
   $jenkins_plugins = undef,
-  $ensure = 'present'
+  $ensure = 'present',
+  $disable_csrf = false
 ) {
 
   if $ensure in [present, absent] {
