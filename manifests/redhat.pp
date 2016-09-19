@@ -1,4 +1,7 @@
 class jenkins::redhat {
+
+  Yum::Repo <| title == 'cegeka-custom-noarch' |>
+
   package { 'jenkins' :
     ensure => $jenkins::real_jenkins_ensure,
   }
