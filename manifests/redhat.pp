@@ -26,11 +26,9 @@ class jenkins::redhat {
 
   case $::operatingsystemrelease {
       /^7.*/: {
-        file_line { 'jenkins_systemd_service':
+        file { '/usr/lib/systemd/system/jenkins.service':
           ensure  => present,
-          path    => '/usr/lib/systemd/system/jenkins.service',
-          line    => "ExecStart=/usr/bin/java -Djenkins.install.runSetupWizard=false -Dcom.sun.akuma.Daemon=daemonized \${JENKINS_JAVA_OPTIONS} -DJENKINS_HOME=\${JENKINS_HOME} -jar /usr/lib/jenkins/jenkins.war --logfile=/var/log/jenkins/jenkins.log --webroot=/var/cache/jenkins/war --daemon --httpPort=\${JENKINS_PORT} --debug=\${JENKINS_DEBUG_LEVEL} --handlerCountMax=\${JENKINS_HANDLER_MAX} --handlerCountMaxIdle=\${JENKINS_HANDLER_IDLE}",
-          match   => '^ExecStart\=',
+          source  => 'puppet:///modules/puppet/usr/lib/systemd/system/jenkins.service',
           require => Package['jenkins'],
           notify  => Exec['jenkins-daemon-reload'],
         }
@@ -40,7 +38,7 @@ class jenkins::redhat {
           user        => 'root',
           refreshonly => true,
           notify      => Service['jenkins'],
-          require     => File_Line['jenkins_systemd_service'],
+          require     => File['/usr/lib/systemd/system/jenkins.service'],
         }
       }
       default: {}
