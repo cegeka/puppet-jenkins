@@ -28,7 +28,7 @@ class jenkins::redhat {
       /^7.*/: {
         file { '/usr/lib/systemd/system/jenkins.service':
           ensure  => present,
-          source  => 'puppet:///modules/puppet/usr/lib/systemd/system/jenkins.service',
+          source  => "puppet:///modules/${module_name}/usr/lib/systemd/system/jenkins.service",
           require => Package['jenkins'],
           notify  => Exec['jenkins-daemon-reload'],
         }
