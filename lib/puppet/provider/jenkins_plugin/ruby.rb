@@ -15,6 +15,10 @@ Puppet::Type.newtype(:jenkins_plugin) do
     desc "The token to use to log in on jenkins"
   end
 
+  newparam(:ignore_api_errors) do
+    desc "Dont fail when plugins could not be handled"
+  end
+
   def exists?
     uri = URI.parse("http://localhost:8080")
     http = Net::HTTP.new(uri.host, uri.port)
@@ -24,17 +28,25 @@ Puppet::Type.newtype(:jenkins_plugin) do
 
     response = http.request(request)
 
-    if response.code == "403"
-      if self[:api_user].nil? && self[:api_token].nil?
-        raise Puppet::ParseError, "No api_user and api_token defined, but jenkins needs a token"
+    if response.code == "403" # Unauthenticated response code
+      if self[:api_user].nil? && self[:api_token].nil? # check if we have a user and token
+        if self[:ignore_api_errors] != true # if ignore errors is not false, exit with an error
+          raise Puppet::ParseError, "No api_user and api_token defined, but jenkins needs a token"
+        else
+          return true
+        end
       else
         request.basic_auth self[:api_user], self[:api_token]
         response = http.request(request)
       end
     end
 
-    if response.code != "200"
-      raise Puppet::ParseError, "Error checking install state for plugin #{self[:name]}. Check api user and token?"
+    if response.code != "200" # check is NOT ok
+      if self[:ignore_api_errors] != true # we ignore errors so puppet run will not fail
+        raise Puppet::ParseError, "Error checking install state for plugin #{self[:name]}. Check api user and token?"
+      else
+        return true
+      end
     end
 
     return response.body.include? "data-plugin-id=\"#{self[:name]}\""
