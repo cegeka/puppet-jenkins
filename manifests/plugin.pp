@@ -1,6 +1,8 @@
 define jenkins::plugin(
   $version = undef,
-  $plugin_dir = undef
+  $plugin_dir = undef,
+  $api_user = undef,
+  $api_token = undef,
 ) {
 
   include jenkins::params
@@ -21,7 +23,9 @@ define jenkins::plugin(
   }
 
   jenkins_plugin { $name:
-    ensure => present,
+    ensure    => present,
+    api_user  => $api_user,
+    api_token => $api_token,
   }
 
 }
