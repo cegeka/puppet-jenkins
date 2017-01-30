@@ -16,7 +16,8 @@ class jenkins(
   $ensure = 'present',
   $disable_csrf = false,
   $api_user = undef,
-  $api_token = undef
+  $api_token = undef,
+  $ignore_api_errors = false,
 ) {
 
   if $ensure in [present, absent] {
@@ -40,8 +41,9 @@ class jenkins(
   }
   if $jenkins_plugins {
     jenkins::plugin { $jenkins_plugins:
-      api_user  => $api_user,
-      api_token => $api_token
+      api_user          => $api_user,
+      api_token         => $api_token,
+      ignore_api_errors => $ignore_api_errors
     }
   }
 
