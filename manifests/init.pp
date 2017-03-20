@@ -18,6 +18,7 @@ class jenkins(
   $api_user = undef,
   $api_token = undef,
   $ignore_api_errors = false,
+  $jenkins_java_options = []
 ) {
 
   if $ensure in [present, absent] {
@@ -46,5 +47,16 @@ class jenkins(
       ignore_api_errors => $ignore_api_errors
     }
   }
-
+  if ! empty($jenkins_java_options) {
+    #transform java_opts to string
+    $string_jenkins_java_options=join($jenkins_java_options,' ')
+    #add escaped ' and " for augeas
+    $value="\'\"${string_jenkins_java_options}\"\'"
+    augeas { 'set JENKINS JENKINS_JAVA_OPTIONS':
+      incl    => '/etc/sysconfig/jenkins',
+      lens    => 'Properties.lns',
+      changes => "set JENKINS_JAVA_OPTIONS ${value}",
+      notify  => Service['jenkins']
+    }
+  }
 }
