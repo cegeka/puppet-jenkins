@@ -18,15 +18,32 @@ Puppet::Type.newtype(:jenkins_plugin) do
   newparam(:ignore_api_errors) do
     desc "Dont fail when plugins could not be handled"
   end
-
   def exists?
+    counter=0
     uri = URI.parse("http://localhost:8080")
     http = Net::HTTP.new(uri.host, uri.port)
 
     request = Net::HTTP::Post.new("/pluginManager/installed")
     request.add_field('Content-Type', 'text/xml')
 
-    response = http.request(request)
+    while counter <=3 do 
+      begin
+        counter +=1
+        response = http.request(request)
+        if response.code == "503"
+        then
+          sleep 10
+          next
+        end
+      rescue Exception => e
+        if e.to_s == "Connection refused - connect(2)"
+        then
+          sleep 5
+          next
+        end
+      end
+      break
+    end
 
     if response.code == "403" # Unauthenticated response code
       if self[:api_user].nil? && self[:api_token].nil? # check if we have a user and token
@@ -47,9 +64,11 @@ Puppet::Type.newtype(:jenkins_plugin) do
       else
         return true
       end
+    else
+      return response.body.include? "data-plugin-id=\"#{self[:name]}\""
     end
 
-    return response.body.include? "data-plugin-id=\"#{self[:name]}\""
+    #return response.body.include? "data-plugin-id=\"#{self[:name]}\""
   end
 
   def destroy
