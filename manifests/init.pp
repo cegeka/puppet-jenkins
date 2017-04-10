@@ -57,7 +57,8 @@ class jenkins(
       incl    => '/etc/sysconfig/jenkins',
       lens    => 'Properties.lns',
       changes => "set JENKINS_JAVA_OPTIONS ${value}",
-      notify  => Service['jenkins']
+      notify  => Service['jenkins'],
+      require => Package['jenkins']
     }
   }
 }
