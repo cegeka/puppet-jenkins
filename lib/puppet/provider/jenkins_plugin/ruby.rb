@@ -30,17 +30,17 @@ Puppet::Type.newtype(:jenkins_plugin) do
       begin
         counter +=1
         response = http.request(request)
-        if response.code == "503"
-        then
-          sleep 10
-          next
-        end
       rescue Exception => e
         if e.to_s == "Connection refused - connect(2)"
         then
           sleep 5
           next
         end
+      end
+      if response.code == "503"
+      then
+        sleep 10
+        next
       end
       break
     end
