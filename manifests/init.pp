@@ -44,7 +44,8 @@ class jenkins(
     jenkins::plugin { $jenkins_plugins:
       api_user          => $api_user,
       api_token         => $api_token,
-      ignore_api_errors => $ignore_api_errors
+      ignore_api_errors => $ignore_api_errors,
+      require           => Service[jenkins]
     }
   }
   if ! empty($jenkins_java_options) {
