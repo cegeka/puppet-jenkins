@@ -18,7 +18,8 @@ class jenkins(
   $api_user = undef,
   $api_token = undef,
   $ignore_api_errors = false,
-  $jenkins_java_options = []
+  $jenkins_java_options = [],
+  $slice_percentage = undef
 ) {
 
   if $ensure in [present, absent] {
