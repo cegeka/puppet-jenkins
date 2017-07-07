@@ -1,0 +1,6 @@
+[Unit]
+Description=Limited resources Slice
+DefaultDependencies=no
+Before=slices.target
+[Slice]
+CPUQuota=<%= @slice_percentage %>%
