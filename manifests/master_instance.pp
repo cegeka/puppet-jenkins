@@ -14,7 +14,7 @@ define jenkins::master_instance(
   user { $user :
     ensure  => present,
     home    => "/data/${user}",
-    groups  => "jenkins",
+    groups  => 'jenkins',
     comment => "Jenkins service user - ${user}",
     require => Package['jenkins']
   }
@@ -123,6 +123,5 @@ Slice=${user}.slice",
       changes => "rm /files/data/${user}/config.xml/hudson/crumbIssuer",
       notify  => Service['jenkins'],
     }
-  }    
-
+  }
 }
