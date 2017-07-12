@@ -1,0 +1,13 @@
+[Unit]
+Description=<%= @user %> master
+After=syslog.target network.target
+Before=httpd.service
+[Service]
+Type=simple
+EnvironmentFile=-/etc/sysconfig/<%= @user %>
+ExecStart=/usr/bin/java $JENKINS_JAVA_OPTIONS -Djenkins.install.runSetupWizard=false -Dcom.sun.akuma.Daemon=daemonized -DJENKINS_HOME=${JENKINS_HOME} -jar /usr/lib/jenkins/jenkins.war --logfile=/var/log/<%= @user %>/jenkins.log --webroot=/var/cache/<%= @user %>/war --daemon --httpPort=${JENKINS_PORT} --debug=${JENKINS_DEBUG_LEVEL} --handlerCountMax=${JENKINS_HANDLER_MAX} --handlerCountMaxIdle=${JENKINS_HANDLER_IDLE}
+User=<%= @user %>
+Restart=no
+StandardOutput=null
+[Install]
+WantedBy=multi-user.target
