@@ -26,11 +26,12 @@ define jenkins::slave(
   }
 
   user { $name :
-    ensure  => present,
-    home    => "${home_prefix}/${name}",
-    uid     => $user_id,
-    shell   => '/bin/bash',
-    comment => "Jenkins Slave User - ${name}",
+    ensure   => present,
+    home     => "${home_prefix}/${name}",
+    uid      => $user_id,
+    password => $password,
+    shell    => '/bin/bash',
+    comment  => "Jenkins Slave User - ${name}",
   }
 
   ::lvm::logical_volume { $name :
