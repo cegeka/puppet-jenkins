@@ -1,5 +1,5 @@
 = puppet-jenkins module
 
-{<img src='https://codex.cegeka.be/jenkins/job/puppet-jenkins/badge/icon' />}[https://codex.cegeka.be/jenkins/job/puppet-jenkins/]
+{<img src='https://jenkins-iac.cegeka.be/job/puppet-jenkins/badge/icon' />}[https://jenkins-iac.cegeka.be/job/puppet-jenkins/]
 
 This is the jenkins module.
