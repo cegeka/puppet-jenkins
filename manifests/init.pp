@@ -11,16 +11,18 @@
 # Sample Usage:
 #
 class jenkins(
+  $ensure = 'present',
   $jenkins_version = undef,
   $jenkins_plugins = undef,
-  $ensure = 'present',
+  $jenkins_user = 'jenkins',
   $disable_csrf = false,
   $api_user = undef,
   $api_token = undef,
   $ignore_api_errors = false,
+  $jenkins_java_version = undef,
   $jenkins_java_options = [],
   $slice_percentage = undef
-) {
+) inherits jenkins::params {
 
   if $ensure in [present, absent] {
   } else {
@@ -41,7 +43,8 @@ class jenkins(
       redhat, centos: { include jenkins::redhat }
       default: { fail("operatingsystem ${::operatingsystem} is not supported") }
   }
-  if $jenkins_plugins {
+
+  if ! empty($jenkins_plugins) {
     jenkins::plugin { $jenkins_plugins:
       api_user          => $api_user,
       api_token         => $api_token,
@@ -49,17 +52,5 @@ class jenkins(
       require           => Service[jenkins]
     }
   }
-  if ! empty($jenkins_java_options) {
-    #transform java_opts to string
-    $string_jenkins_java_options=join($jenkins_java_options,' ')
-    #add escaped ' and " for augeas
-    $value="\'\"${string_jenkins_java_options}\"\'"
-    augeas { 'set JENKINS JENKINS_JAVA_OPTIONS':
-      incl    => '/etc/sysconfig/jenkins',
-      lens    => 'Properties.lns',
-      changes => "set JENKINS_JAVA_OPTIONS ${value}",
-      notify  => Service['jenkins'],
-      require => Package['jenkins']
-    }
-  }
+
 }

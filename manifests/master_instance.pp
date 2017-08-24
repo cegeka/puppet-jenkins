@@ -2,7 +2,7 @@ define jenkins::master_instance(
   $user = undef,
   $slice_percentage = undef,
   $port = undef,
-  $java_cmd = '',
+  $java_cmd = '/usr/lib/jvm/jre/bin/java',
   $ajp_port = undef,
   $debug_level = '5',
   $access_log = 'no',
