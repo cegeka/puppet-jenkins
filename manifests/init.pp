@@ -14,6 +14,8 @@ class jenkins(
   $ensure = 'present',
   $jenkins_version = undef,
   $jenkins_plugins = undef,
+  $jenkins_ssh_credentials = undef,
+  $jenkins_userpass_credentials = undef,
   $jenkins_user = 'jenkins',
   $disable_csrf = false,
   $api_user = undef,
@@ -53,4 +55,13 @@ class jenkins(
     }
   }
 
+  if ! empty($jenkins_ssh_credentials) or ! empty($jenkins_userpass_credentials) {
+    class { '::jenkins::credentials': }
+    if ! empty($jenkins_ssh_credentials) {
+      create_resources('jenkins::credentials::private_key', $jenkins_ssh_credentials)
+    }
+    if ! empty($jenkins_userpass_credentials) {
+      create_resources('jenkins::credentials::username_password', $jenkins_userpass_credentials)
+    }
+  }
 }

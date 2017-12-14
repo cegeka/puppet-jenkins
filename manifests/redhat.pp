@@ -18,7 +18,19 @@ class jenkins::redhat {
     enable     => true,
     hasrestart => true,
     hasstatus  => true,
-    require    => Package['jenkins'],
+    require    => Package['jenkins']
+  }
+
+  file { '/data/jenkins' :
+    ensure  => directory,
+    owner   => 'jenkins',
+    group   => 'jenkins',
+  }
+
+  file { '/data/jenkins/.ssh' :
+    ensure  => directory,
+    owner   => 'jenkins',
+    group   => 'jenkins',
   }
 
   file { '/data/jenkins/plugins' :
