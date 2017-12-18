@@ -5,7 +5,7 @@ def usernamepassword_credential = {id, secret_id, description ->
 	def domain = com.cloudbees.plugins.credentials.domains.Domain.global()
 	def store = jenkins.getExtensionList('com.cloudbees.plugins.credentials.SystemCredentialsProvider')[0].getStore()
 
-	def username = "java -jar /data/jenkins/init.groovy.d/secretserver-jconsole.jar -s ${secret_id} UserName".execute()
+	def username = "java -jar /data/jenkins/init.groovy.d/secretserver-jconsole.jar -s ${secret_id} Username".execute()
 	def password = "java -jar /data/jenkins/init.groovy.d/secretserver-jconsole.jar -s ${secret_id} Password".execute()
 
 	username.waitFor() //groovy processes are async, so we have to wait

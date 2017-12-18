@@ -21,6 +21,13 @@ class jenkins::credentials {
     require => File['/data/jenkins/init.groovy.d'],
   }
 
+  file { '/data/jenkins/init.groovy.d/ssh_slave.groovy':
+    source  => 'puppet:///modules/jenkins/data/jenkins/init.groovy.d/ssh_slave.groovy',
+    owner   => 'jenkins',
+    group   => 'jenkins',
+    require => File['/data/jenkins/init.groovy.d'],
+  }
+
   file { "/data/jenkins/init.groovy.d/ditem.dat":
     ensure  => file,
     mode    => '0400',
