@@ -12,6 +12,6 @@ define jenkins::plugin(
     api_user          => $api_user,
     api_token         => $api_token,
     ignore_api_errors => $ignore_api_errors,
-    before            => Class["jenkins::credentials"]
+    before            => Class['jenkins::credentials']
   }
 }
