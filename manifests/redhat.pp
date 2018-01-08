@@ -50,15 +50,6 @@ class jenkins::redhat {
     require => File['/data/jenkins/'],
   }
 
-  file { '/data/jenkins/init.groovy.d/master_configuration.groovy':
-    path    => '/data/jenkins/init.groovy.d/master_configuration.groovy',
-    owner   => 'jenkins',
-    group   => 'jenkins',
-    mode    => '0400',
-    content => template('jenkins/master_configuration.erb'),
-    require => File['/data/jenkins/init.groovy.d'],
-  }
-
   if ! empty($jenkins::jenkins_java_options) {
     #transform java_opts to string
     $string_jenkins_java_options=join($jenkins::jenkins_java_options,' ')
