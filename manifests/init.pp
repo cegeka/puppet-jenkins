@@ -14,6 +14,8 @@ class jenkins(
   $ensure = 'present',
   $jenkins_version = undef,
   $jenkins_plugins = undef,
+  $jenkins_slave_config = undef,
+  $jenkins_master_config = undef,
   $jenkins_user = 'jenkins',
   $disable_csrf = false,
   $api_user = undef,
@@ -53,4 +55,17 @@ class jenkins(
     }
   }
 
+  if ! empty($jenkins_slave_config) {
+      file { '/data/jenkins/init.groovy.d/ssh_slave.groovy':
+        source  => 'puppet:///modules/jenkins/data/jenkins/init.groovy.d/ssh_slave.groovy',
+        owner   => 'jenkins',
+        group   => 'jenkins',
+        require => File['/data/jenkins/init.groovy.d'],
+      }
+      create_resources('jenkins::config::slave', $jenkins_slave_config)
+  }
+
+  if $jenkins_master_config {
+    include jenkins::config::master
+  }
 }

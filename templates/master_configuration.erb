@@ -1,0 +1,15 @@
+import jenkins.*
+
+<% if scope.function_hiera(['profile::iac::jenkins::nginx::enable_ssl']) %>
+protocol = 'https://'
+<% else %>
+protocol = 'http://'
+<% end %>
+
+url = protocol + '<%= scope.function_hiera(['profile::iac::jenkins::url']) %>'
+admin_email = '<%= scope.function_hiera(['profile::iac::jenkins::admin_email']) %>'
+
+
+jlc = new jenkins.model.JenkinsLocationConfiguration();
+jlc.setUrl(url);
+jlc.setAdminAddress(admin_email);

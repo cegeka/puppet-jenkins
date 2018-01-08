@@ -1,0 +1,14 @@
+import java.io.File
+
+def ssh_slave = evaluate(new File("/data/jenkins/init.groovy.d/ssh_slave.groovy"))
+
+ssh_slave.call(
+    name            = '<%= @name %>',
+    credential_id   = '<%= credential_id %>',
+    description     = '<%= @name %> - Managed in puppet',
+    ip              = '<%= @ip %>',
+    port            = <%= @port %>,
+    home            = '<%= @home %>',
+    executors       = '<%= @executors %>',
+    agentLabels     = '<%= @labels %>'
+)

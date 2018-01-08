@@ -18,7 +18,19 @@ class jenkins::redhat {
     enable     => true,
     hasrestart => true,
     hasstatus  => true,
-    require    => Package['jenkins'],
+    require    => Package['jenkins']
+  }
+
+  file { '/data/jenkins' :
+    ensure => directory,
+    owner  => 'jenkins',
+    group  => 'jenkins',
+  }
+
+  file { '/data/jenkins/.ssh' :
+    ensure => directory,
+    owner  => 'jenkins',
+    group  => 'jenkins',
   }
 
   file { '/data/jenkins/plugins' :
@@ -29,6 +41,13 @@ class jenkins::redhat {
       Package['jenkins'],
       Service['jenkins'],
     ]
+  }
+
+  file { '/data/jenkins/init.groovy.d':
+    ensure  => 'directory',
+    owner   => 'jenkins',
+    group   => 'jenkins',
+    require => File['/data/jenkins/'],
   }
 
   if ! empty($jenkins::jenkins_java_options) {
@@ -81,10 +100,10 @@ Slice=jenkins.slice',
             content => template("${module_name}/jenkins-default.slice.erb")
           }
         }
-        file { "/usr/lib/systemd/system/jenkins.service":
+        file { '/usr/lib/systemd/system/jenkins.service':
           ensure  => present,
           content => template("${module_name}/jenkins.service.erb"),
-          notify  => Exec["jenkins-daemon-reload"],
+          notify  => Exec['jenkins-daemon-reload'],
           require => Package['jenkins']
         }
         exec { 'jenkins-daemon-reload':
