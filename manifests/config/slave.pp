@@ -4,6 +4,7 @@ define jenkins::config::slave (
   $port,
   $home,
   $executors,
+  $mode,
   $labels
 ) {
 
