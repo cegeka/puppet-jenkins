@@ -42,7 +42,7 @@ class jenkins(
   }
 
   case $::operatingsystem {
-      redhat, centos: { include jenkins::redhat }
+      'RedHat', 'CentOS': { include jenkins::redhat }
       default: { fail("operatingsystem ${::operatingsystem} is not supported") }
   }
 
