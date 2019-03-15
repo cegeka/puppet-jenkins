@@ -18,6 +18,7 @@ Puppet::Type.newtype(:jenkins_plugin) do
   newparam(:ignore_api_errors) do
     desc "Dont fail when plugins could not be handled"
   end
+  
   def exists?
     counter=0
     uri = URI.parse("http://localhost:8080")

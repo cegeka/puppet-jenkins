@@ -15,6 +15,7 @@ class jenkins(
   $jenkins_version = undef,
   $jenkins_plugins = undef,
   $jenkins_slave_config = undef,
+  $jenkins_thycotic_config = undef,
   $jenkins_master_config = undef,
   $jenkins_user = 'jenkins',
   $disable_csrf = false,
@@ -63,6 +64,30 @@ class jenkins(
         require => File['/data/jenkins/init.groovy.d'],
       }
       create_resources('jenkins::config::slave', $jenkins_slave_config)
+  }
+
+  if ! empty($jenkins_thycotic_config) {
+      file { '/data/jenkins/init.groovy.d/thycotic_check.groovy':
+        source  => 'puppet:///modules/jenkins/data/jenkins/init.groovy.d/thycotic_check.groovy',
+        owner   => 'jenkins',
+        group   => 'jenkins',
+        require => File['/data/jenkins/init.groovy.d'],
+      }
+      file { '/data/jenkins/init.groovy.d/thycotic_sync.groovy':
+        source  => 'puppet:///modules/jenkins/data/jenkins/init.groovy.d/thycotic_sync.groovy',
+        owner   => 'jenkins',
+        group   => 'jenkins',
+        require => File['/data/jenkins/init.groovy.d'],
+      }
+      file { '/data/jenkins/init.groovy.d/usernamepassword_credentials.groovy':
+        source  => 'puppet:///modules/jenkins/data/jenkins/init.groovy.d/usernamepassword_credentials.groovy',
+        owner   => 'jenkins',
+        group   => 'jenkins',
+        require => File['/data/jenkins/init.groovy.d'],
+      }
+
+
+      create_resources('::jenkins::thycotic_sync', $jenkins_thycotic_config)
   }
 
   if $jenkins_master_config {
