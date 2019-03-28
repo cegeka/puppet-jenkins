@@ -12,7 +12,8 @@ define jenkins::thycotic_sync (
     require => [
       File['/data/jenkins/init.groovy.d/thycotic_sync.groovy'],
       File['/data/jenkins/init.groovy.d/thycotic_check.groovy'],
-      File['/data/jenkins/init.groovy.d/usernamepassword_credentials.groovy']
+      File['/data/jenkins/init.groovy.d/usernamepassword_credentials.groovy'],
+      Service['jenkins']
     ]
   }
 }

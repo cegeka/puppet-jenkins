@@ -6,7 +6,7 @@ class jenkins::config::master {
     group   => 'jenkins',
     mode    => '0400',
     content => template('jenkins/master_configuration.erb'),
-    require => File['/data/jenkins/init.groovy.d'],
+    require => [File['/data/jenkins/init.groovy.d'], Service['jenkins']]
   }
 
 }

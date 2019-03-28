@@ -38,7 +38,7 @@ Puppet::Type.newtype(:jenkins_thycotic_folder) do
     script += File.read("/data/jenkins/init.groovy.d/thycotic_check.groovy")
     request.body = "script="+CGI.escape(script)
   
-    while counter <= 3 do 
+    while counter <= 10 do
       begin
         counter += 1
         response = http.request(request)
