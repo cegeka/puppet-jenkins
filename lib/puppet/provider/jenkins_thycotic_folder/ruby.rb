@@ -34,7 +34,6 @@ Puppet::Type.newtype(:jenkins_thycotic_folder) do
     def thycotic_hostname = "'+self[:thycotic_url]+'"
 
     def thycotic_folder_id      = '+self[:folder_id]+'
-    def thycotic_secret_type_id = 9
     '
     script += File.read("/data/jenkins/init.groovy.d/thycotic_check.groovy")
     request.body = "script="+CGI.escape(script)
@@ -99,7 +98,6 @@ Puppet::Type.newtype(:jenkins_thycotic_folder) do
     def thycotic_hostname = "'+self[:thycotic_url]+'"
 
     def thycotic_folder_id      = '+self[:folder_id]+'
-    def thycotic_secret_type_id = 9
     '
     script += File.read("/data/jenkins/init.groovy.d/thycotic_sync.groovy")
     request.body = "script="+CGI.escape(script)

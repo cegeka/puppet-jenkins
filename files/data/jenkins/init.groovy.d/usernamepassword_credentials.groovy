@@ -7,7 +7,7 @@ def usernamepassword_credential = {id, username, password, description ->
 
     def usernameAndPassword = new UsernamePasswordCredentialsImpl(com.cloudbees.plugins.credentials.CredentialsScope.GLOBAL, id, description, username, password)
     
-	def creds = com.cloudbees.plugins.credentials.CredentialsProvider.lookupCredentials(
+    def creds = com.cloudbees.plugins.credentials.CredentialsProvider.lookupCredentials(
         com.cloudbees.plugins.credentials.common.StandardUsernameCredentials.class,
         jenkins
     )
