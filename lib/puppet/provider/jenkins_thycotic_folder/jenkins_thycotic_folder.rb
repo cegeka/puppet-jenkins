@@ -3,22 +3,7 @@ require "net/http"
 require "uri"
 require "cgi"
 
-Puppet::Type.newtype(:jenkins_thycotic_folder) do
-  newparam(:folder_id, :namevar => true) do
-    desc "The folder id to sync"
-  end
-
-  newparam(:thycotic_username, :namevar => false) do
-    desc "The username of thycotic service account to use"
-  end
-  
-  newparam(:thycotic_password, :namevar => false) do
-    desc "The username of thycotic service account to use"
-  end
-
-  newparam(:thycotic_url, :namevar => false) do
-    desc "The url of the thycotic server to use"
-  end
+Puppet::Type.type(:jenkins_thycotic_folder).provide(:jenkins_thycotic_folder) do
 
   def exists?
     counter=0
@@ -29,11 +14,11 @@ Puppet::Type.newtype(:jenkins_thycotic_folder) do
     request = Net::HTTP::Post.new(uri)
 
     script = '
-    def thycotic_username = "'+self[:thycotic_username]+'"
-    def thycotic_password = "'+self[:thycotic_password]+'"
-    def thycotic_hostname = "'+self[:thycotic_url]+'"
+    def thycotic_username = "'+resource[:thycotic_username]+'"
+    def thycotic_password = "'+resource[:thycotic_password]+'"
+    def thycotic_hostname = "'+resource[:thycotic_url]+'"
 
-    def thycotic_folder_id      = '+self[:folder_id]+'
+    def thycotic_folder_id      = '+resource[:folder_id]+'
     '
     script += File.read("/data/jenkins/init.groovy.d/thycotic_check.groovy")
     request.body = "script="+CGI.escape(script)
@@ -58,20 +43,20 @@ Puppet::Type.newtype(:jenkins_thycotic_folder) do
     end
     
     if response.code == "403" # Unauthenticated response code
-      if self[:api_user].nil? && self[:api_token].nil? # check if we have a user and token
-        if self[:ignore_api_errors] != true # if ignore errors is not false, exit with an error
+      if resource[:api_user].nil? && resource[:api_token].nil? # check if we have a user and token
+        if resource[:ignore_api_errors] != true # if ignore errors is not false, exit with an error
           raise Puppet::ParseError, "No api_user and api_token defined, but jenkins needs a token"
         else
           return true
         end
       else
-        request.basic_auth self[:api_user], self[:api_token]
+        request.basic_auth resource[:api_user], resource[:api_token]
         response = http.request(request)
       end
     end
 
     if response.code != "200" # check is NOT ok
-      if self[:ignore_api_errors] != true # we ignore errors so puppet run will not fail
+      if resource[:ignore_api_errors] != true # we ignore errors so puppet run will not fail
         raise Puppet::ParseError, "Error checking if secrets are in sync. Check api user and token?"
       else
         return true
@@ -93,11 +78,11 @@ Puppet::Type.newtype(:jenkins_thycotic_folder) do
     request = Net::HTTP::Post.new(uri)
 
     script = '
-    def thycotic_username = "'+self[:thycotic_username]+'"
-    def thycotic_password = "'+self[:thycotic_password]+'"
-    def thycotic_hostname = "'+self[:thycotic_url]+'"
+    def thycotic_username = "'+resource[:thycotic_username]+'"
+    def thycotic_password = "'+resource[:thycotic_password]+'"
+    def thycotic_hostname = "'+resource[:thycotic_url]+'"
 
-    def thycotic_folder_id      = '+self[:folder_id]+'
+    def thycotic_folder_id      = '+resource[:folder_id]+'
     '
     script += File.read("/data/jenkins/init.groovy.d/thycotic_sync.groovy")
     request.body = "script="+CGI.escape(script)

@@ -4,7 +4,7 @@ define jenkins::thycotic_sync (
 ) {
   include jenkins::params
 
-  jenkins_thycotic_folder { " ${folder_id}":
+  jenkins_thycotic_folder { "${folder_id}":
     ensure            => present,
     thycotic_username => getsecret($thycotic_credentials,'UserName'),
     thycotic_password => getsecret($thycotic_credentials,'Password'),

@@ -5,6 +5,18 @@ Puppet::Type.newtype(:jenkins_plugin) do
   ensurable
 
   newparam(:name, :namevar => true) do
-    desc "The name of the jenkins plugin that should be installed"
+      desc "Jenkins plugin name"
+  end
+
+  newparam(:api_user) do
+    desc "The username to use to log in on jenkins"
+  end
+
+  newparam(:api_token) do
+    desc "The token to use to log in on jenkins"
+  end
+
+  newparam(:ignore_api_errors) do
+    desc "Dont fail when plugins could not be handled"
   end
 end

@@ -11,12 +11,24 @@ Puppet::Type.newtype(:jenkins_thycotic_folder) do
   newparam(:thycotic_username, :namevar => false) do
     desc "The username of thycotic service account to use"
   end
-  
+
   newparam(:thycotic_password, :namevar => false) do
     desc "The username of thycotic service account to use"
   end
 
   newparam(:thycotic_url, :namevar => false) do
     desc "The url of the thycotic server to use"
+  end
+
+  newparam(:api_user) do
+    desc "The username to use to log in on jenkins"
+  end
+
+  newparam(:api_token) do
+    desc "The token to use to log in on jenkins"
+  end
+
+  newparam(:ignore_api_errors) do
+    desc "Dont fail when plugins could not be handled"
   end
 end
