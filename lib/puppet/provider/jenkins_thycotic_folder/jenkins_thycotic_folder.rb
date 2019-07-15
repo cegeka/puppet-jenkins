@@ -87,7 +87,12 @@ Puppet::Type.type(:jenkins_thycotic_folder).provide(:jenkins_thycotic_folder) do
     script += File.read("/data/jenkins/init.groovy.d/thycotic_sync.groovy")
     request.body = "script="+CGI.escape(script)
 
+    if ! resource[:api_token].nil?
+       request.basic_auth resource[:api_user], resource[:api_token]
+    end
+
     response = http.request(request)
+
     if response.code == "200"
       return true
     else
