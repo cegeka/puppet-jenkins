@@ -89,6 +89,11 @@ if (syncNeeded) {
   //If it isn't we're going to require a sync anyway to make sure manually edited values in jenkins are overwritten
   def tempPath = System.getProperty('java.io.tmpdir')
   def lastSyncFile = new File(tempPath+"/.jenkins-last-sync")
+
+  if (!lastSyncFile.exists()) {
+    lastSyncFile.createNewFile()
+  }
+
   def checkTime = new Date().time
 
   if(lastSyncFile.lastModified() >= checkTime) {
