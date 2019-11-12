@@ -1,6 +1,6 @@
 class jenkins::redhat {
 
-  Yum::Repo <| title == 'cegeka-custom-noarch' |>
+  Cegeka_yum::Repo <| title == 'cegeka-custom-noarch' |>
 
   $user = $jenkins::jenkins_user
   $java_cmd = '/usr/lib/jvm/jre/bin/java'
