@@ -27,12 +27,6 @@ class jenkins::redhat {
     group  => 'jenkins',
   }
 
-  file { '/data/jenkins/.ssh' :
-    ensure => directory,
-    owner  => 'jenkins',
-    group  => 'jenkins',
-  }
-
   file { '/data/jenkins/plugins' :
     ensure  => directory,
     owner   => 'jenkins',
