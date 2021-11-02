@@ -68,7 +68,7 @@ class jenkins::redhat {
     lens    => 'Properties.lns',
     changes => "set JENKINS_JAVA_CMD ${java_cmd}",
     notify  => Service['jenkins'],
-    require => Package["java-${jenkins::jenkins_java_version}-openjdk"]
+    require => Package["java-${jenkins::jenkins_java_version}-openjdk-headless"]
   }
 
   case $::operatingsystemrelease {
