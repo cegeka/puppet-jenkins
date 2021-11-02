@@ -10,7 +10,7 @@ class jenkins::redhat {
   }
 
   if $::operatingsystemmajrelease == '8' {
-        realize Dnf::Module['javapackages-runtime']
+    realize Dnf::Module['javapackages-runtime']
   }
 
   package { "java-${jenkins::jenkins_java_version}-openjdk-headless":
