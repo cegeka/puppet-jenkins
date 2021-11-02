@@ -9,8 +9,13 @@ class jenkins::redhat {
     ensure => $jenkins::real_jenkins_ensure,
   }
 
-  package { "java-${jenkins::jenkins_java_version}-openjdk":
-    ensure =>  present
+  if $::operatingsystemmajrelease == '8' {
+        realize Dnf::Module['javapackages-runtime']
+  }
+
+  package { "java-${jenkins::jenkins_java_version}-openjdk-headless":
+    ensure  => present,
+    require => $::operatingsystemmajrelease == '8'  ? {true => Dnf::Module['javapackages-runtime'], default => undef}
   }
 
   service { 'jenkins' :
