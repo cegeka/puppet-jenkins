@@ -2,7 +2,7 @@ import hudson.model.Node.Mode
 import hudson.slaves.*
 import jenkins.model.Jenkins
 import hudson.plugins.sshslaves.SSHLauncher
-
+import hudson.plugins.sshslaves.verifiers.NonVerifyingKeyVerificationStrategy
 
 
 def ssh_slave = {String name, String credentialID, String description, String ip, int port, String home, String usage_mode, String executors, String agentLabels ->
@@ -19,7 +19,7 @@ def ssh_slave = {String name, String credentialID, String description, String ip
         executors,
         mode, // "Usage" field, EXCLUSIVE is "only tied to node", NORMAL is "any"
         agentLabels,
-        new SSHLauncher(ip, port, credentialID, "", "", "", "", 60, 3, 15),
+        new SSHLauncher(ip, port, credentialID, "", "", "", "", 60, 3, 15, new NonVerifyingKeyVerificationStrategy()),
         RetentionStrategy.INSTANCE) // Is the "Availability" field, INSTANCE = always on
     Jenkins.instance.addNode(dumb)
 }
