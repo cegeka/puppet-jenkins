@@ -8,7 +8,7 @@ define jenkins::thycotic_sync (
 
   jenkins_thycotic_folder { "${folder_id}":
     ensure            => present,
-    thycotic_username => getsecret($thycotic_credentials,'UserName'),
+    thycotic_username => getsecret($thycotic_credentials,'Username'),
     thycotic_password => getsecret($thycotic_credentials,'Password'),
     thycotic_url      => getsecret($thycotic_credentials,'URL'),
     api_user          => $api_user,
