@@ -5,7 +5,7 @@ Before=httpd.service
 [Service]
 Type=simple
 EnvironmentFile=-/etc/sysconfig/<%= @user %>
-ExecStart=<%= @java_cmd %> $JENKINS_JAVA_OPTIONS -Djenkins.install.runSetupWizard=false -Dcom.sun.akuma.Daemon=daemonized -DJENKINS_HOME=${JENKINS_HOME} -jar /usr/lib/jenkins/jenkins.war --logfile=/var/log/<%= @user %>/jenkins.log --webroot=/var/cache/<%= @user %>/war --daemon --httpPort=${JENKINS_PORT} --debug=${JENKINS_DEBUG_LEVEL} --handlerCountMax=${JENKINS_HANDLER_MAX} --handlerCountMaxIdle=${JENKINS_HANDLER_IDLE}
+ExecStart=<%= @java_cmd %> $JENKINS_JAVA_OPTIONS -Djenkins.install.runSetupWizard=false -Dcom.sun.akuma.Daemon=daemonized -DJENKINS_HOME=${JENKINS_HOME} -jar /usr/lib/jenkins/jenkins.war --logfile=/var/log/<%= @user %>/jenkins.log --webroot=/var/cache/<%= @user %>/war --httpPort=${JENKINS_PORT} --debug=${JENKINS_DEBUG_LEVEL}
 User=<%= @user %>
 Restart=no
 StandardOutput=null

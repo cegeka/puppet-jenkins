@@ -6,8 +6,6 @@ define jenkins::master_instance(
   $ajp_port = undef,
   $debug_level = '5',
   $access_log = 'no',
-  $handler_max = '100',
-  $handler_idle = '20',
   $jenkins_args = '',
   $java_opts = ''
 ) {
