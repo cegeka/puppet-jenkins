@@ -11,6 +11,9 @@ class jenkins::master {
     }
   }
 
+  # these values are used in the jenkins.sysconfig.erb template
+  $java_opts = join($jenkins::jenkins_java_options, ' ' )
+
   package { 'jenkins' :
     ensure => $real_jenkins_ensure,
   }
