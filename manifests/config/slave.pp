@@ -7,7 +7,6 @@ define jenkins::config::slave (
   $mode,
   $labels
 ) {
-
   file { "/data/jenkins/init.groovy.d/ssh_slave_${name}.groovy":
     path    => "/data/jenkins/init.groovy.d/ssh_slave_${name}.groovy",
     owner   => 'jenkins',

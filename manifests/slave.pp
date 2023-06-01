@@ -1,4 +1,4 @@
-define jenkins::slave(
+define jenkins::slave (
   $user_id,
   $slice_percentage,
   $home_prefix = '/data',
@@ -7,7 +7,6 @@ define jenkins::slave(
   $secret_id = undef,
   $password = undef
 ) {
-
   if $secret_id == undef and $password == undef {
     fail('You must privide a password or a secret_id to ::jenkins::slave')
   }
@@ -18,7 +17,7 @@ define jenkins::slave(
     $user_password = $password
   }
 
-  file {"${home_prefix}/${name}":
+  file { "${home_prefix}/${name}":
     ensure  => directory,
     owner   => $name,
     group   => $name,
@@ -41,7 +40,6 @@ define jenkins::slave(
     size         => $disk_size,
     mountpath    => "${home_prefix}/${name}"
   }
-
 
   case $::operatingsystemrelease {
     /^7.*/: {

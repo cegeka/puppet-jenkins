@@ -1,5 +1,4 @@
 class jenkins::config::master {
-
   $enable_ssl = lookup('profile::iac::jenkins::nginx::enable_ssl')
   $jenkins_url = lookup('profile::iac::jenkins::url')
   $admin_email = lookup('profile::iac::jenkins::admin_email')
@@ -10,7 +9,6 @@ class jenkins::config::master {
     group   => 'jenkins',
     mode    => '0400',
     content => template('jenkins/master_configuration.erb'),
-    require => [File['/data/jenkins/init.groovy.d'], Service['jenkins']]
+    require => [File['/data/jenkins/init.groovy.d'], Service['jenkins']],
   }
-
 }

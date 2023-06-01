@@ -1,3 +1,6 @@
+####### This file is managed by Puppet
+#### Manual modifications will be gone after a successfull puppet run
+##
 ## Path:        Development/Jenkins
 ## Description: Configuration for the Jenkins continuous build server
 ## Type:        string
@@ -7,7 +10,7 @@
 # Directory where Jenkins store its configuration and working
 # files (checkouts, build reports, artifacts, ...).
 #
-JENKINS_HOME="/data/<%= @user %>"
+JENKINS_HOME="/data/jenkins"
 
 ## Type:        string
 ## Default:     ""
@@ -16,7 +19,7 @@ JENKINS_HOME="/data/<%= @user %>"
 # Java executable to run Jenkins
 # When left empty, we'll try to find the suitable Java.
 #
-JENKINS_JAVA_CMD=""
+JENKINS_JAVA_CMD="/usr/bin/java"
 
 ## Type:        string
 ## Default:     "jenkins"
@@ -26,7 +29,7 @@ JENKINS_JAVA_CMD=""
 # Be careful when you change this, as you need to update
   # permissions of $JENKINS_HOME and /var/log/jenkins.
 #
-JENKINS_USER="<%= @user %>"
+JENKINS_USER="jenkins"
 
 ## Type:        string
 ## Default:     "-Djava.awt.headless=true"
@@ -34,7 +37,7 @@ JENKINS_USER="<%= @user %>"
 #
 # Options to pass to java when running Jenkins.
 #
-JENKINS_JAVA_OPTIONS="<%= @java_opts %>"
+JENKINS_JAVA_OPTIONS="-Djava.awt.headless=true"
 
 ## Type:        integer(0:65535)
 ## Default:     8080
@@ -43,7 +46,7 @@ JENKINS_JAVA_OPTIONS="<%= @java_opts %>"
 # Port Jenkins is listening on.
 # Set to -1 to disable
 #
-JENKINS_PORT="<%= @port %>"
+JENKINS_PORT="8080"
 
 ## Type:        integer(0:65535)
 ## Default:     -1
@@ -60,7 +63,7 @@ JENKINS_AJP_PORT="-1"
 # Ajp13 Port Jenkins is listening on.
 # Set to -1 to disable
 #
-JENKINS_AJP_PORT="<%= @ajp_port %>"
+JENKINS_AJP_PORT="-1"
 
 ## Type:        integer(1:9)
 ## Default:     5
@@ -69,7 +72,7 @@ JENKINS_AJP_PORT="<%= @ajp_port %>"
 # Debug level for logs -- the higher the value, the more verbose.
 # 5 is INFO.
 #
-JENKINS_DEBUG_LEVEL="<%= @debug_level %>"
+JENKINS_DEBUG_LEVEL="5"
 
 ## Type:        yesno
 ## Default:     no
@@ -77,7 +80,7 @@ JENKINS_DEBUG_LEVEL="<%= @debug_level %>"
 #
 # Whether to enable access logging or not.
 #
-JENKINS_ENABLE_ACCESS_LOG="<%= @access_log %>"
+JENKINS_ENABLE_ACCESS_LOG="no"
 
 ## Type:        string
 ## Default:     ""
@@ -86,4 +89,4 @@ JENKINS_ENABLE_ACCESS_LOG="<%= @access_log %>"
 # Pass arbitrary arguments to Jenkins.
 # Full option list: java -jar jenkins.war --help
 #
-JENKINS_ARGS="<%= @jenkins_args %>"
+JENKINS_ARGS=""
