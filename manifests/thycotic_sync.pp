@@ -6,6 +6,7 @@ define jenkins::thycotic_sync (
 ) {
   include jenkins::params
 
+#folder ID needs to be quoted as its expecting a string and not integer
   jenkins_thycotic_folder { "${folder_id}":
     ensure            => present,
     thycotic_username => getsecret($thycotic_credentials,'Username'),
