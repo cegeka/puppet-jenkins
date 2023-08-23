@@ -9,7 +9,7 @@ ssh_slave.call(
     ip              = '<%= @ip %>',
     port            = <%= @port %>,
     home            = '<%= @home %>',
-    executors       = '<%= @executors %>',
+    executors       = <%= @executors %>,
     mode            = '<%= @mode %>',
-    agentLabels     = '<%= @labels %>'
+    agentLabels     = '<%= @real_labels %>'
 )

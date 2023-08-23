@@ -5,7 +5,7 @@ import hudson.plugins.sshslaves.SSHLauncher
 import hudson.plugins.sshslaves.verifiers.NonVerifyingKeyVerificationStrategy
 
 
-def ssh_slave = {String name, String credentialID, String description, String ip, int port, String home, String usage_mode, String executors, String agentLabels ->
+def ssh_slave = {String name, String credentialID, String description, String ip, int port, String home, int executors, String usage_mode, String agentLabels ->
 
     if (usage_mode == 'normal') {
         mode = Mode.NORMAL
@@ -14,13 +14,14 @@ def ssh_slave = {String name, String credentialID, String description, String ip
     }
     DumbSlave dumb = new DumbSlave(
         name,
-        description,
         home,
-        executors,
-        mode, // "Usage" field, EXCLUSIVE is "only tied to node", NORMAL is "any"
-        agentLabels,
         new SSHLauncher(ip, port, credentialID, "", "", "", "", 60, 3, 15, new NonVerifyingKeyVerificationStrategy()),
-        RetentionStrategy.INSTANCE) // Is the "Availability" field, INSTANCE = always on
+    )
+    dumb.nodeDescription = description
+    dumb.numExecutors = executors
+    dumb.labelString = agentLabels
+    dumb.mode = mode
+    dumb.retentionStrategy = RetentionStrategy.INSTANCE
     Jenkins.instance.addNode(dumb)
 }
 
