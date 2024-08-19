@@ -41,7 +41,7 @@ define jenkins::slave (
     mountpath    => "${home_prefix}/${name}"
   }
 
-  case $::operatingsystemrelease {
+  case $facts['os']['release']['full'] {
     /^7.*/: {
       file { "/usr/lib/systemd/system/user-${user_id}.slice" :
         ensure  => present,

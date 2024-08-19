@@ -18,7 +18,7 @@ class jenkins::master {
     ensure => $real_jenkins_ensure,
   }
 
-  if $::operatingsystemmajrelease == '8' {
+  if $facts['os']['release']['major'] == '8' {
     realize Dnf::Module['javapackages-runtime']
 
     # make sure the javapackages-runtime dnf module is active before the package requirement or it won't find the package
