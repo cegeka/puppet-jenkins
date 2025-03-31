@@ -5,7 +5,7 @@ import hudson.plugins.sshslaves.SSHLauncher
 import hudson.plugins.sshslaves.verifiers.NonVerifyingKeyVerificationStrategy
 
 
-def ssh_slave = {String name, String credentialID, String description, String ip, int port, String home, int executors, String usage_mode, String agentLabels ->
+def ssh_slave = {String name, String credentialID, String description, String java_path, String ip, int port, String home, int executors, String usage_mode, String agentLabels ->
 
     if (usage_mode == 'normal') {
         mode = Mode.NORMAL
@@ -15,7 +15,7 @@ def ssh_slave = {String name, String credentialID, String description, String ip
     DumbSlave dumb = new DumbSlave(
         name,
         home,
-        new SSHLauncher(ip, port, credentialID, "", "", "", "", 60, 3, 15, new NonVerifyingKeyVerificationStrategy()),
+        new SSHLauncher(ip, port, credentialID, "", java_path, "", "", 60, 3, 15, new NonVerifyingKeyVerificationStrategy()),
     )
     dumb.nodeDescription = description
     dumb.numExecutors = executors

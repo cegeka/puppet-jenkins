@@ -5,7 +5,8 @@ define jenkins::config::slave (
   $home,
   $executors,
   $mode,
-  $labels
+  $labels,
+  Optional $java_path = undef
 ) {
 
   if is_array($labels){
